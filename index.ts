@@ -1,13 +1,23 @@
 import express from 'express';
-const app = express()
+import { calculateBmi } from './bmiCalculator';
+const app = express();
 
 app.get('/ping', (_req, res) => {
+  console.log(_req.query)
   res.send('pong');
 });
 
 app.get('/hello', (_req, res) => {
   res.send('Hello Full Stack!');
 });
+
+app.get('/bmi', (_req, res) => {
+  res.json({
+    weight: _req.query.weight,
+    height: _req.query.height,
+    bmi: calculateBmi(Number(_req.query.height), Number(_req.query.weight))
+  })
+})
 
 const PORT = 3003;
 
