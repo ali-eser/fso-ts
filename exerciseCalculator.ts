@@ -22,20 +22,20 @@ const calculateExercise = (exerciseDays: number[], target: number): Stats => {
     }
   }
 
-  const average: number = totalHours / exerciseDays.length
+  const average: number = totalHours / exerciseDays.length;
 
   if (average >= target) {
     success = true;
     rating = 3;
-    ratingDescription = "well done!"
+    ratingDescription = "well done!";
   } else if (target - average <= 1) {
     success = false;
     rating = 2;
-    ratingDescription = "could be better"
+    ratingDescription = "could be better";
   } else {
     success = false;
     rating = 1;
-    ratingDescription = "not enough"
+    ratingDescription = "not enough";
   }
 
   return {
@@ -46,13 +46,13 @@ const calculateExercise = (exerciseDays: number[], target: number): Stats => {
     ratingDescription: ratingDescription,
     target: target,
     average: average
-  }
-}
+  };
+};
 
-let param1: number[] = [];
+const param1: number[] = [];
 
 for (let i = 2; i < process.argv.length - 1; i++) {
-  param1.push(Number(process.argv[i]))
+  param1.push(Number(process.argv[i]));
 }
 
 const param2: number = Number(process.argv[process.argv.length - 1]);

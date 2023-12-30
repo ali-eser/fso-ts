@@ -3,7 +3,6 @@ import { calculateBmi } from './bmiCalculator';
 const app = express();
 
 app.get('/ping', (_req, res) => {
-  console.log(_req.query)
   res.send('pong');
 });
 
@@ -16,11 +15,11 @@ app.get('/bmi', (_req, res) => {
     weight: _req.query.weight,
     height: _req.query.height,
     bmi: calculateBmi(Number(_req.query.height), Number(_req.query.weight))
-  })
-})
+  });
+});
 
 const PORT = 3003;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
+  console.log(`Server is running on port ${PORT}`);
 });
