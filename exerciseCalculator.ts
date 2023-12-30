@@ -49,4 +49,12 @@ const calculateExercise = (exerciseDays: number[], target: number): Stats => {
   }
 }
 
-console.log(calculateExercise([3, 0, 2, 4.5, 0, 3, 1], 2));
+let param1: number[] = [];
+
+for (let i = 2; i < process.argv.length - 1; i++) {
+  param1.push(Number(process.argv[i]))
+}
+
+const param2: number = Number(process.argv[process.argv.length - 1]);
+
+console.log(calculateExercise(param1, param2));

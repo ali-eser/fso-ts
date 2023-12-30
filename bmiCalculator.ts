@@ -10,4 +10,7 @@ const calculateBmi = (height: number, weight: number) => {
   }
 }
 
-console.log(calculateBmi(180, 75))
+const height: number = Number(process.argv[2])
+const weight: number = Number(process.argv[3])
+
+console.log(calculateBmi(height, weight))
