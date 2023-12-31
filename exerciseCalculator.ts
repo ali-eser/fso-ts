@@ -8,7 +8,7 @@ interface Stats {
   average: number
 }
 
-const calculateExercise = (exerciseDays: number[], target: number): Stats => {
+export const calculateExercise = (exerciseDays: number[], target: number): Stats => {
   let totalHours = 0;
   let trainingDays = 0;
   let success: boolean;
