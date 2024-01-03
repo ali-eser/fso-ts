@@ -5,13 +5,16 @@ import { v1 as uuid } from "uuid";
 const patients: PatientEntry[] = patientData;
 
 const getPatients = (): PatientEntry[] => {
-  return patients.map(({ id, name, ssn, dateOfBirth, gender, occupation, entries }) => ({
+  return patients.map(({ id, name, ssn, dateOfBirth, gender, occupation, description, date, specialist, entries }) => ({
     id,
     name,
     ssn,
     dateOfBirth,
     gender,
     occupation,
+    description,
+    date,
+    specialist,
     entries
   }))
 };
@@ -26,14 +29,14 @@ const getOnePatient = (id: string): PatientEntry => {
 }
 
 const addPatients = (entry: NewPatientEntry): PatientEntry => {
-  const newPatientEntry = {
+  const newEntry = {
     id: uuid(),
     entries: [],
     ...entry
   }
 
-  patients.push(newPatientEntry);
-  return newPatientEntry;
+  patients.push(newEntry);
+  return newEntry;
 };
 
 export default { getPatients, addPatients, getOnePatient };
