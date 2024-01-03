@@ -2,12 +2,36 @@ interface HeaderType {
   name: string
 }
 
-interface ContentType {
-  courseParts: {
-    name: string,
-    exerciseCount: number
-  }[]
+interface CoursePartBase {
+  name: string;
+  exerciseCount: number;
 }
+
+interface CoursePartBasic extends CoursePartBase {
+  kind: "basic"
+}
+
+interface CoursePartGroup extends CoursePartBase {
+  groupProjectCount: number;
+  kind: "group"
+}
+
+interface CoursePartBackground extends CoursePartBase {
+  backgroundMaterial: string;
+  kind: "background"
+}
+
+interface CoursePartInterface extends CoursePartBase {
+  description: string;
+  kind: "background" | "basic" | "special"
+}
+
+interface CoursePartSpecial extends CoursePartBase {
+  requirements: string[];
+  kind: "special"
+}
+
+type CoursePart = CoursePartBasic | CoursePartGroup | CoursePartBackground | CoursePartInterface | CoursePartSpecial;
 
 interface TotalType {
   total: number
@@ -17,11 +41,58 @@ const Header = (props: HeaderType) => (
   <h1>{props.name}</h1>
 );
 
-const Content = (props: ContentType) => (
+const Part = (props: CoursePart) => {
+  switch (props.coursePart.kind) {
+    case "basic":
+      return (
+        <div>
+          <h4>{props.coursePart.name}</h4>
+          <p><b>description:</b> {props.coursePart.description}</p>
+          <p><b>exercise count:</b> {props.coursePart.exerciseCount}</p>
+        </div>
+      )
+    case "group":
+      return (
+        <div>
+          <h4>{props.coursePart.name}</h4>
+          <p><b>exercise count:</b> {props.coursePart.exerciseCount}</p>
+          <p><b>group project count:</b> {props.coursePart.groupProjectCount}</p>
+        </div>
+
+      )
+    case "background":
+      return (
+        <div>
+          <h4>{props.coursePart.name}</h4>
+          <p><b>description:</b> {props.coursePart.description}</p>
+          <p><b>background material: </b>{props.coursePart.backgroundMaterial}</p>
+        </div>
+      )
+    case "special":
+      return (
+        <div>
+          <h4>{props.coursePart.name}</h4>
+          <p><b>description:</b> {props.coursePart.description}</p>
+          <b>requirements: </b>
+          <ul>
+            {props.coursePart.requirements.map(req => (
+              <li key={req}>{req}</li>
+            ))}
+          </ul>
+        </div>
+      )
+  }
+};
+
+const Content = (props: CoursePart[]) => (
   <div>
-    <p>{props.courseParts[0].name} {props.courseParts[0].exerciseCount}</p>
-    <p>{props.courseParts[1].name} {props.courseParts[1].exerciseCount}</p>
-    <p>{props.courseParts[2].name} {props.courseParts[2].exerciseCount}</p>
+    {props.courseParts.map(part => (
+      <div>
+        <Part coursePart={part} key={part.name}/>
+        <hr />
+      </div>
+
+    ))}
   </div>
 );
 
@@ -31,28 +102,6 @@ const Total = (props: TotalType) => (
 
 const App = () => {
   const courseName = "Half Stack application development";
-  interface CoursePartBase {
-    name: string;
-    exerciseCount: number;
-  }
-  
-  interface CoursePartBasic extends CoursePartBase {
-    description: string;
-    kind: "basic"
-  }
-  
-  interface CoursePartGroup extends CoursePartBase {
-    groupProjectCount: number;
-    kind: "group"
-  }
-  
-  interface CoursePartBackground extends CoursePartBase {
-    description: string;
-    backgroundMaterial: string;
-    kind: "background"
-  }
-  
-  type CoursePart = CoursePartBasic | CoursePartGroup | CoursePartBackground;
   
   const courseParts: CoursePart[] = [
     {
@@ -86,6 +135,13 @@ const App = () => {
       description: "a hard part",
       kind: "basic",
     },
+    {
+      name: "Backend development",
+      exerciseCount: 21,
+      description: "Typing the backend",
+      requirements: ["nodejs", "jest"],
+      kind: "special"
+    }
   ];
 
   const totalExercises = courseParts.reduce((sum, part) => sum + part.exerciseCount, 0);
