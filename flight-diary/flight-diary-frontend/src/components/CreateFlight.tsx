@@ -18,6 +18,11 @@ const CreateFlight = ({ diaries, setDiaries } : Props) => {
     };
     const response = await diaryService.postDiary(newDiary);
     setDiaries(diaries.concat(response.data));
+    
+    target.date.value = '';
+    target.visibility.value = null;
+    target.weather.value = null;
+    target.comment.value = '';
   };
 
   return (
