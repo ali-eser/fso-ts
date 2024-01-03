@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import diaryService from './services/diaries';
-
+import CreateFlight from './components/CreateFlight';
 import { Diary } from './types';
 
 const App = () => {
@@ -17,8 +17,10 @@ const App = () => {
 
   return (
     <div>
+        <CreateFlight diaries={diaries} setDiaries={setDiaries}/>
+        <h2>Diaries</h2>
         {Object.values(diaries).map((diary: Diary) => (
-          <div>
+          <div key={diary.id}>
             <h3>{diary.date}</h3>
             <p>{diary.visibility}</p>
             <p>{diary.weather}</p>

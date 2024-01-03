@@ -17,3 +17,5 @@ export interface Diary {
   visibility: Visibility,
   comment?: string
 }
+
+export type NewDiary = Omit<Diary,  "id">;
